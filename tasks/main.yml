@@ -1,0 +1,21 @@
+---
+
+
+- name: Set node.js version
+  set_fact:
+    nodejs_package: 'node_{{ nodejs_version }}_armhf.deb'
+
+
+- name: Download node.js
+  get_url:
+    url: 'http://node-arm.herokuapp.com/{{ nodejs_package }}'
+    dest: '/tmp/{{ nodejs_package }}'
+  register: package_result
+
+
+- name: Install node.js
+  apt:
+    deb: '/tmp/{{ nodejs_package }}'
+    state: present
+
+
